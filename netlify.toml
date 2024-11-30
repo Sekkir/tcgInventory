@@ -1,0 +1,3 @@
+[build]
+  command = "npm install && npm install -g @ionic/cli && ionic build --prod"
+  publish = "www"
