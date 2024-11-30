@@ -1,0 +1,7 @@
+{
+  "name": "EstadioInventory",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
