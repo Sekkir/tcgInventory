@@ -1,0 +1,35 @@
+/* Asegúrate de que ion-content ocupe todo el espacio disponible */
+ion-content {
+    height: 100%;
+    padding: 0;
+  }
+  
+  /* Establecer el área scrollable solo en la lista */
+  .scrollable-list {
+    background-color: #5eabeb;
+    overflow-y: auto;           /* Solo la lista será desplazable */
+    margin: 0;
+    padding: 0 16px;            /* Espaciado dentro de la lista */
+    max-height: calc(100vh - 110px);  /* Altura restante después de los tabs */
+  }
+  
+  /* Ajuste para el comportamiento del ion-card dentro de la lista */
+  ion-card {
+    background: transparent;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+  
+  /* Personaliza el encabezado y contenido de las tarjetas */
+  ion-card-header {
+    background-color: #b2b6bb;
+  }
+  
+  ion-card-content {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 1px;
+  }
+  

@@ -1,3 +1,15 @@
-<p>
-  actualizar-producto works!
-</p>
+
+
+<ion-searchbar
+placeholder="Buscar producto..."
+[showClearButton]="true"
+(ionInput)="buscarProducto($event)"
+debounce="500"
+cancelButtonText="Cancelar"
+>
+<ion-icon slot="start" name="search"></ion-icon>
+</ion-searchbar>
+
+<!-- Aquí podrías mostrar los productos filtrados según la búsqueda -->
+
+

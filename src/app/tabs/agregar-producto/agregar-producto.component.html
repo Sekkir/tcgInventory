@@ -1,3 +1,69 @@
-<p>
-  agregar-producto works!
-</p>
+<ion-card class="form-card">
+  <form (ngSubmit)="guardarProducto()">
+    <ion-item class="styled-item">
+      <ion-label position="floating">Correlativo</ion-label>
+      <ion-input
+        [(ngModel)]="correlativo"
+        name="correlativo"
+        type="text"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="styled-item">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input
+        [(ngModel)]="nombre_producto"
+        name="nombre_producto"
+        type="text"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="styled-item">
+      <ion-label position="floating">Stock</ion-label>
+      <ion-input
+        [(ngModel)]="stock"
+        name="stock"
+        type="number"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="styled-item">
+      <ion-label position="floating">Precio Compra</ion-label>
+      <ion-input
+        [(ngModel)]="precio_compra"
+        name="precio_compra"
+        type="number"
+        (ionInput)="calcularPrecioVenta()"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="styled-item">
+      <ion-label position="floating">Ganancia (%)</ion-label>
+      <ion-input
+        [(ngModel)]="ganancia"
+        name="ganancia"
+        type="number"
+        (ionInput)="calcularPrecioVenta()"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="styled-item">
+      <ion-label position="floating">Precio Venta</ion-label>
+      <ion-input
+        [value]="precio_venta | number:'1.2-2'"
+        readonly
+      ></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" color="success">
+        Guardar Producto
+      </ion-button>
+    </div>
+  </form>
+</ion-card>

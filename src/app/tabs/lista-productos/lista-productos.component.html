@@ -1,3 +1,17 @@
-<p>
-  lista-productos works!
-</p>
+<ion-refresher slot="fixed" (ionRefresh)="refreshProductos($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+
+<!-- Solo esta parte debe ser scrollable -->
+<ion-list class="scrollable-list">
+  <ion-card *ngFor="let producto of productos">
+    <ion-card-header>
+      <ion-card-title>{{ producto.nombre_producto }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>{{ producto.correlativo }}</strong></p>
+      <p><strong>Precio Venta:</strong> {{ producto.precio_venta | currency }}</p>
+      <p><strong>Stock:</strong> {{ producto.stock }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-list>

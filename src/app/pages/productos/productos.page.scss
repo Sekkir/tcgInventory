@@ -1,0 +1,33 @@
+/* Fondo azul mate para la página */
+ion-content {
+    --background: #4b7eb8; /* Azul mate */
+  }
+  
+  /* Estilo del toolbar en rojo mate */
+  ion-toolbar {
+    --background: #b12d2d; /* Rojo mate */
+    --color: white; /* Color del texto dentro del toolbar */
+  }
+  
+  /* Estilo de los botones y otros elementos si es necesario */
+  ion-button {
+    --background: #d32f2f; /* Rojo mate */
+    --color: white;
+    --border-radius: 8px;
+  }
+  
+  ion-item {
+    --background: #ffffff; /* Fondo blanco para los items */
+    --border-color: #e7e7e7; /* Borde gris claro */
+  }
+  
+  /* Ajustes adicionales para un estilo mate más suave */
+  ion-header, ion-content {
+    --ion-background-color: #f8f8f8; /* Suave azul pastel para el contenido */
+  }
+  
+  /* Para los iconos */
+  ion-icon {
+    color: #2fb9f0; /* Blanco para los iconos en el toolbar */
+  }
+  
