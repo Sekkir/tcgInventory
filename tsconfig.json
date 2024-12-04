@@ -19,7 +19,9 @@
     "target": "es2022",
     "module": "es2020",
     "lib": ["es2018", "dom"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "esModuleInterop": true,  // Habilita la interoperabilidad con módulos ES
+    "allowSyntheticDefaultImports": true  // Permite la importación de exportaciones por defecto
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
