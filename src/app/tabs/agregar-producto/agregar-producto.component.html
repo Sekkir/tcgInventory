@@ -20,15 +20,35 @@
       ></ion-input>
     </ion-item>
 
-    <ion-item class="styled-item">
-      <ion-label position="floating">Stock</ion-label>
-      <ion-input
-        [(ngModel)]="stock"
-        name="stock"
-        type="number"
-        required
-      ></ion-input>
-    </ion-item>
+    <!-- Usamos ion-grid para alinear horizontalmente -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Tipo de Producto</ion-label>
+            <ion-select [(ngModel)]="tipo_productoElegido" name="tipo_producto" required>
+              <ion-select-option *ngFor="let tipo of tipos_producto" [value]="tipo.id_tipoProducto">
+                {{ tipo.tipo_producto }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Stock</ion-label>
+            <ion-input
+              [(ngModel)]="stock"
+              name="stock"
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
     <ion-item class="styled-item">
       <ion-label position="floating">Precio Compra</ion-label>

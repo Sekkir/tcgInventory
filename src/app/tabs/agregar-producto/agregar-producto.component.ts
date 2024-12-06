@@ -7,6 +7,7 @@ import { ProductosService } from 'src/app/servicios/productos/productos.service'
 import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { ProductosPage } from 'src/app/pages/productos/productos.page';
 import { TabsService } from 'src/app/servicios/tabs/tabs.service';
+
 @Component({
   selector: 'app-agregar-producto',
   templateUrl: './agregar-producto.component.html',
@@ -27,8 +28,10 @@ export class AgregarProductoComponent {
   precio_compra: number = 0;
   ganancia: number = 0;
   precio_venta: number = 0;
-  id_creado_por: number = 0;
+  id_creado_por: number = 1;
   stock: number = 0;
+  tipos_producto: any[] = [];
+  tipo_productoElegido!: number;
 
   constructor(
     private productosService: ProductosService,
@@ -44,6 +47,7 @@ export class AgregarProductoComponent {
     if (decodedToken) {
       this.id_creado_por = decodedToken.id_usuario; // Asignar id_usuario al id_creado_por
     }
+    this.obtenerTiposProducto();
   }
 
 
@@ -53,6 +57,12 @@ export class AgregarProductoComponent {
     this.precio_venta = this.precio_compra * (1 + this.ganancia / 100);
   }
 
+  obtenerTiposProducto() {
+    this.productosService.obtenerTiposProducto().subscribe((tipos) => {
+      this.tipos_producto = tipos;
+      console.log("Categorias: " + this.tipos_producto);
+    });
+  }
 
 
 
@@ -60,6 +70,7 @@ export class AgregarProductoComponent {
 
   // Método para guardar el producto
   guardarProducto() {
+
     const producto = {
       correlativo: this.correlativo,
       nombre_producto: this.nombre_producto,
@@ -67,7 +78,8 @@ export class AgregarProductoComponent {
       precio_compra: this.precio_compra,
       ganancia: this.ganancia,
       precio_venta: this.precio_venta,
-      id_creado_por: this.id_creado_por
+      id_creado_por: this.id_creado_por,
+      tipoProducto: this.tipo_productoElegido
     };
 
     // Llamada al servicio para crear el producto

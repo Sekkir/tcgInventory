@@ -1,15 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonTab } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonTab, IonList, IonItem, IonButtons, IonButton } from '@ionic/angular/standalone';
 import { AgregarProductoComponent } from 'src/app/tabs/agregar-producto/agregar-producto.component';
 import { ActualizarProductoComponent } from 'src/app/tabs/actualizar-producto/actualizar-producto.component';
 import { ListaProductosComponent } from 'src/app/tabs/lista-productos/lista-productos.component';
 import { FormsModule } from '@angular/forms';
-import { addCircleOutline, createOutline, listOutline, refresh } from 'ionicons/icons';
+import { addCircleOutline, createOutline, ellipsisVertical, listOutline, refresh } from 'ionicons/icons';
 import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { ProductosService } from 'src/app/servicios/productos/productos.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { TabsService } from 'src/app/servicios/tabs/tabs.service';
+import { PopoverController } from '@ionic/angular';
+import { MenuOpcionesComponent } from 'src/app/componentes/menu-opciones/menu-opciones.component';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { TabsService } from 'src/app/servicios/tabs/tabs.service';
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
   standalone: true,
-  imports: [IonIcon,IonTab, IonLabel, IonIcon, 
+  imports: [IonButton, IonButtons, IonItem, IonList, IonIcon,IonTab, IonLabel, IonIcon, 
             IonTabButton, IonTabBar, IonTabs, IonContent,
             FormsModule, IonHeader, IonTitle, IonToolbar, 
             CommonModule,AgregarProductoComponent, 
@@ -44,6 +46,7 @@ export class ProductosPage implements OnInit {
     update: createOutline,
     list: listOutline,
     download: refresh,
+    elipse: ellipsisVertical,
   };
 
 
@@ -52,7 +55,8 @@ export class ProductosPage implements OnInit {
     private authService: AuthService,
     private productosService: ProductosService,
     private changeDetectorRef: ChangeDetectorRef,
-    private tabEventService: TabsService
+    private tabEventService: TabsService,
+    private popoverController: PopoverController
   ) {
 
 }
@@ -121,5 +125,14 @@ export class ProductosPage implements OnInit {
       }, 1000);  // Tiempo de espera simulado antes de que se complete el refresco
     }
 
+
+    async presentPopover(event: any) {
+      const popover = await this.popoverController.create({
+        component: MenuOpcionesComponent, // Asegúrate de tener este componente creado
+        event: event,
+        translucent: true
+      });
+      await popover.present();
+    }
 }
 

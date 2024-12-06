@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class ProductosService {
 
-  private apiUrl = 'http://localhost:3000/api/productos'; // URL de tu API, ajusta según corresponda
+  private apiUrl = 'https://betcgestadio-production.up.railway.app/api/productos'; // URL de tu API, ajusta según corresponda
   private productosSubject = new BehaviorSubject<any[]>([]); // Lista reactiva de productos
 
 
@@ -28,8 +28,7 @@ export class ProductosService {
     this.productosSubject.next(productos); // Emite la nueva lista
   }
 
-    // Obtener el flujo reactivo de productos
-    obtenerProductos(): Observable<any[]> {
-      return this.productosSubject.asObservable();
-    }
+  obtenerTiposProducto(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl+"/categorias");
+  }
 }
