@@ -11,23 +11,7 @@ function createWindow() {
     }
   });
 
-  win.loadURL('http://localhost:8100'); // URL local de tu app Ionic
-  
-  win.on('closed', () => {
-    win = null;
-  });
+  win.loadFile('www/index.html'); // Ruta del build de Ionic
 }
 
 app.on('ready', createWindow);
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  if (win === null) {
-    createWindow();
-  }
-});
