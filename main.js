@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path'); 
 let win;
 
 function createWindow() {
@@ -10,11 +11,15 @@ function createWindow() {
     }
   });
 
-  win.loadURL('http://localhost:8100'); // Si es un proyecto de Ionic
-
-
-  // Abre las herramientas de desarrollo
-  win.webContents.openDevTools();
+  if (process.env.NODE_ENV === 'development') {
+    win.loadURL('http://localhost:8100');
+    win.webContents.openDevTools();  // Para desarrollo, abrimos las herramientas
+  } else {
+    // En producción, carga el archivo index.html desde la carpeta 'www'
+    win.loadFile(path.join(__dirname, 'www', 'index.html')).catch(err => {
+      console.error('Error al cargar index.html:', err);
+    });
+  }
 }
 
 app.whenReady().then(() => {
