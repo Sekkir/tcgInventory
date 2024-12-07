@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require('electron');
-
 let win;
 
 function createWindow() {
@@ -11,7 +10,21 @@ function createWindow() {
     }
   });
 
-  win.loadFile('www/index.html'); // Ruta del build de Ionic
+  win.loadURL('http://localhost:8100'); // Si es un proyecto de Ionic
+
+
+  // Abre las herramientas de desarrollo
+  win.webContents.openDevTools();
 }
 
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
