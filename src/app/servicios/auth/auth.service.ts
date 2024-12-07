@@ -9,7 +9,7 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://betcgestadio-production.up.railway.app/api';
   private tokenKey = 'auth_token'; // Clave para almacenar el token en localStorage
 
 

@@ -12,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { TabsService } from 'src/app/servicios/tabs/tabs.service';
 import { PopoverController } from '@ionic/angular';
 import { MenuOpcionesComponent } from 'src/app/componentes/menu-opciones/menu-opciones.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { MenuOpcionesComponent } from 'src/app/componentes/menu-opciones/menu-op
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
   standalone: true,
-  imports: [IonButton, IonButtons, IonItem, IonList, IonIcon,IonTab, IonLabel, IonIcon, 
+  imports: [IonButton, IonButtons, IonIcon,IonTab, IonLabel, IonIcon, 
             IonTabButton, IonTabBar, IonTabs, IonContent,
             FormsModule, IonHeader, IonTitle, IonToolbar, 
             CommonModule,AgregarProductoComponent, 
@@ -56,13 +57,13 @@ export class ProductosPage implements OnInit {
     private productosService: ProductosService,
     private changeDetectorRef: ChangeDetectorRef,
     private tabEventService: TabsService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private route: ActivatedRoute,
   ) {
 
 }
 
   ngOnInit() {
-    //this.obtenerUsuarioId();
 
     this.obtenerProductos();
     // Nos suscribimos al evento del servicio

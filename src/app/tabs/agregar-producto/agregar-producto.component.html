@@ -1,5 +1,42 @@
 <ion-card class="form-card">
+
   <form (ngSubmit)="guardarProducto()">
+
+
+  
+    
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Costo de Lote</ion-label>
+            <ion-input
+              [(ngModel)]="precio_lote"
+              name="costo_lote"
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+    
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Costos Extras</ion-label>
+            <ion-input
+              [(ngModel)]="costos_extra"
+              name="costos_extras"
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+
     <ion-item class="styled-item">
       <ion-label position="floating">Correlativo</ion-label>
       <ion-input
@@ -26,14 +63,14 @@
         <ion-col size="6">
           <ion-item class="styled-item">
             <ion-label position="floating">Tipo de Producto</ion-label>
-            <ion-select [(ngModel)]="tipo_productoElegido" name="tipo_producto" required>
+            <ion-select [(ngModel)]="tipo_productoElegido" 
+            name="tipo_producto" 
+            required>
               <ion-select-option *ngFor="let tipo of tipos_producto" [value]="tipo.id_tipoProducto">
                 {{ tipo.tipo_producto }}
               </ion-select-option>
             </ion-select>
-          </ion-item>
-          
-          
+          </ion-item>         
         </ion-col>
 
         <ion-col size="6">
@@ -50,16 +87,41 @@
       </ion-row>
     </ion-grid>
 
-    <ion-item class="styled-item">
-      <ion-label position="floating">Precio Compra</ion-label>
-      <ion-input
-        [(ngModel)]="precio_compra"
-        name="precio_compra"
-        type="number"
-        (ionInput)="calcularPrecioVenta()"
-        required
-      ></ion-input>
-    </ion-item>
+
+
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Precio de Unidad</ion-label>
+            <ion-input
+              [(ngModel)]="precio_compra"
+              name="precio_unidad"
+              type="number"
+              (ionInput)="calcularPrecioCompra()"
+              (ionInput)="calcularPrecioVenta()"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+    
+        <ion-col size="6">
+          <ion-item class="styled-item">
+            <ion-label position="floating">Valor en Lote</ion-label>
+            <ion-input
+              [(ngModel)]="costo_unidad"
+              name="costo_unidad"
+              [value]="costo_unidad | number:'1.2-2'"
+              readonly
+              type="number"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
 
     <ion-item class="styled-item">
       <ion-label position="floating">Ganancia (%)</ion-label>
@@ -75,7 +137,7 @@
     <ion-item class="styled-item">
       <ion-label position="floating">Precio Venta</ion-label>
       <ion-input
-        [value]="precio_venta | number:'1.2-2'"
+        [value]="precioFinal | number:'1.2-2'"
         readonly
       ></ion-input>
     </ion-item>

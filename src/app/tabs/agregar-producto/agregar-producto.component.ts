@@ -23,15 +23,27 @@ export class AgregarProductoComponent {
   @ViewChild('tabs', { static: false }) tabs!: IonTabs; // Referencia a los tabs
   @Output() productoAgregado = new EventEmitter<void>();
   
+  precio_lote: number = 0;
+  costos_extra: number = 0;
+
   correlativo: string = '';
+
   nombre_producto: string = '';
-  precio_compra: number = 0;
-  ganancia: number = 0;
-  precio_venta: number = 0;
-  id_creado_por: number = 1;
-  stock: number = 0;
+
   tipos_producto: any[] = [];
   tipo_productoElegido!: number;
+  stock: number = 0;
+
+  precio_compra: number = 0;
+  costo_unidad: number = 0;
+
+  ganancia: number = 0;
+
+  precioFinal: number = 0;
+
+  precio_venta: number = 0;
+  id_creado_por: number = 0;
+
 
   constructor(
     private productosService: ProductosService,
@@ -42,20 +54,19 @@ export class AgregarProductoComponent {
   ) {}
 
   ngOnInit() {
-    // Obtener el id_usuario del token decodificado
-    const decodedToken = this.authService.getDecodedToken();
-    if (decodedToken) {
-      this.id_creado_por = decodedToken.id_usuario; // Asignar id_usuario al id_creado_por
-    }
     this.obtenerTiposProducto();
   }
 
 
-
+  calcularPrecioCompra() {
+    this.costo_unidad = (this.precio_compra * this.costos_extra) / this.precio_lote;
+  }
 
   calcularPrecioVenta() {
-    this.precio_venta = this.precio_compra * (1 + this.ganancia / 100);
+    this.precioFinal = (this.precio_compra + this.costo_unidad) * (1 + this.ganancia / 100);
   }
+
+
 
   obtenerTiposProducto() {
     this.productosService.obtenerTiposProducto().subscribe((tipos) => {
@@ -72,15 +83,26 @@ export class AgregarProductoComponent {
   guardarProducto() {
 
     const producto = {
+      costo_lote: this.precio_lote,
+      costos_extras: this.costos_extra,
+
       correlativo: this.correlativo,
       nombre_producto: this.nombre_producto,
       stock: this.stock,
-      precio_compra: this.precio_compra,
+
+      precio_unidad: this.precio_compra,
+      costo_unidad: this.costo_unidad,
+
+
       ganancia: this.ganancia,
-      precio_venta: this.precio_venta,
+      precio_venta: this.precioFinal,
       id_creado_por: this.id_creado_por,
-      tipoProducto: this.tipo_productoElegido
+      id_tipoProducto: this.tipo_productoElegido,
+
+
     };
+
+    console.log(producto);
 
     // Llamada al servicio para crear el producto
     this.productosService.crearProducto(producto).subscribe(
