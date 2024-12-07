@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonTab, IonList, IonItem, IonButtons, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonTab, IonButtons, IonButton, IonBackButton } from '@ionic/angular/standalone';
 import { AgregarProductoComponent } from 'src/app/tabs/agregar-producto/agregar-producto.component';
 import { ActualizarProductoComponent } from 'src/app/tabs/actualizar-producto/actualizar-producto.component';
 import { ListaProductosComponent } from 'src/app/tabs/lista-productos/lista-productos.component';
@@ -10,21 +10,19 @@ import { AuthService } from 'src/app/servicios/auth/auth.service';
 import { ProductosService } from 'src/app/servicios/productos/productos.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { TabsService } from 'src/app/servicios/tabs/tabs.service';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { MenuOpcionesComponent } from 'src/app/componentes/menu-opciones/menu-opciones.component';
-import { ActivatedRoute } from '@angular/router';
-
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.page.html',
   styleUrls: ['./productos.page.scss'],
   standalone: true,
-  imports: [IonButton, IonButtons, IonIcon,IonTab, IonLabel, IonIcon, 
-            IonTabButton, IonTabBar, IonTabs, IonContent,
+  imports: [IonBackButton, IonButton, IonButtons, IonIcon,IonTab, IonLabel, IonIcon, 
+          IonTabButton, IonTabBar, IonTabs, IonContent,
             FormsModule, IonHeader, IonTitle, IonToolbar, 
             CommonModule,AgregarProductoComponent, 
-            ListaProductosComponent, ActualizarProductoComponent]
+            ListaProductosComponent, ActualizarProductoComponent,IonBackButton]
 })
 export class ProductosPage implements OnInit {
 
@@ -36,7 +34,7 @@ export class ProductosPage implements OnInit {
   iconoLista: string = listOutline; // Icono inicial
   iconoColor: string = ''; // Color inicial (sin color verde)
   showRefreshIcon: boolean = false; // Bandera para mostrar el ícono de recarga
-  id_usuario: any;
+  id_usuario: number = 0;
 
 
 
@@ -53,17 +51,18 @@ export class ProductosPage implements OnInit {
 
 
   constructor(
-    private authService: AuthService,
     private productosService: ProductosService,
     private changeDetectorRef: ChangeDetectorRef,
     private tabEventService: TabsService,
     private popoverController: PopoverController,
-    private route: ActivatedRoute,
+    private toastController: ToastController,
+    private authService: AuthService,
   ) {
 
 }
 
   ngOnInit() {
+    this.obtenerUsuarioId();
 
     this.obtenerProductos();
     // Nos suscribimos al evento del servicio
@@ -75,17 +74,17 @@ export class ProductosPage implements OnInit {
       }
     });
   }
-  
 
-
-    // Obtener el id_usuario desde el token
-    obtenerUsuarioId() {
-      const decodedToken = this.authService.getDecodedToken();
-      if (decodedToken && decodedToken.id_usuario) {
-        this.id_usuario = decodedToken.id_usuario;
-        console.log('ID Usuario:', this.id_usuario);
-      }
+  obtenerUsuarioId() {
+    const decodedToken = this.authService.getDecodedToken();
+    if (decodedToken) {
+      this.id_usuario = decodedToken.id_usuario; // ID del usuario
+      console.log("Id de Usuario Logueado: ", this.id_usuario);
+    } else {
+      console.error("No se pudo obtener el id_usuario del token.");
     }
+  }
+  
 
 
     obtenerProductos() {
@@ -134,6 +133,15 @@ export class ProductosPage implements OnInit {
         translucent: true
       });
       await popover.present();
+    }
+
+    private async presentToast(message: string) {
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 2000,
+        position: 'bottom'
+      });
+      toast.present();
     }
 }
 

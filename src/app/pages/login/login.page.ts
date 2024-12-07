@@ -50,13 +50,12 @@ export class LoginPage implements OnInit {
       async (response) => {
 
         if (response.success) {
-          const idUsuario = response.id_usuario;
-          console.log(response);
           this.tipoUsuario = response.usuarioLvl; // Obtenemos el tipo de usuario desde la respuesta
-          console.log(response.id_usuario);
           console.log('Inicio de sesión exitoso');
           // Navegar a la página de productos con query params
-        this.router.navigate(['/productos'], { queryParams: { id_usuario: idUsuario } });
+          console.log('Token generado:', response);
+          this.authService.saveToken(response.token); // Almacenar el token
+        this.router.navigate(['/productos']);
 
 
         } else {

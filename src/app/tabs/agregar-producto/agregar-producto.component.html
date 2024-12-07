@@ -64,7 +64,8 @@
           <ion-item class="styled-item">
             <ion-label position="floating">Tipo de Producto</ion-label>
             <ion-select [(ngModel)]="tipo_productoElegido" 
-            name="tipo_producto" 
+            name="tipo_producto"
+            (click)="recargarTiposProducto()"
             required>
               <ion-select-option *ngFor="let tipo of tipos_producto" [value]="tipo.id_tipoProducto">
                 {{ tipo.tipo_producto }}

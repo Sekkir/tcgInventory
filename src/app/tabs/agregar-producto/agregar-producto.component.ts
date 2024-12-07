@@ -54,8 +54,20 @@ export class AgregarProductoComponent {
   ) {}
 
   ngOnInit() {
-    this.obtenerTiposProducto();
+    this.obtenerUsuarioId();
   }
+
+
+  obtenerUsuarioId() {
+    const decodedToken = this.authService.getDecodedToken();
+    if (decodedToken) {
+      this.id_creado_por = decodedToken.id_usuario; // ID del usuario
+      console.log("Id de Usuario Logueado: ", this.id_creado_por);
+    } else {
+      console.error("No se pudo obtener el id_usuario del token.");
+    }
+  }
+
 
 
   calcularPrecioCompra() {
@@ -68,12 +80,22 @@ export class AgregarProductoComponent {
 
 
 
-  obtenerTiposProducto() {
-    this.productosService.obtenerTiposProducto().subscribe((tipos) => {
-      this.tipos_producto = tipos;
-      console.log("Categorias: " + this.tipos_producto);
-    });
+  recargarTiposProducto() {
+    this.productosService.obtenerTiposProducto().subscribe(
+      (tipos: any[]) => {
+        this.tipos_producto = tipos; // Actualizamos la lista en el componente
+        console.log('Lista de tipos de producto recargada desde la base de datos:', this.tipos_producto);
+      },
+      (error) => {
+        console.error('Error al recargar los tipos de producto:', error);
+      }
+    );
   }
+  
+
+
+
+
 
 
 
@@ -137,6 +159,10 @@ export class AgregarProductoComponent {
   }
 
 
+
+
+
+
     // Limpiar los campos
     limpiarCampos() {
       this.correlativo = '';
@@ -145,5 +171,7 @@ export class AgregarProductoComponent {
       this.ganancia = 0;
       this.precio_venta = 0;
       this.stock = 0;
+      this.precioFinal = 0;
+      this.precio_lote = 0;
     }
 }

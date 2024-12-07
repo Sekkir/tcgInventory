@@ -34,10 +34,11 @@ export class AuthService {
     getDecodedToken(): any {
       const token = this.getToken();
       if (token) {
-        return jwt_decode.jwtDecode(token); // Decodifica el JWT y devuelve el payload
+        return jwt_decode.jwtDecode(token); // Decodifica el JWT y devuelve el payload completo
       }
       return null;
     }
+    
 
 
       // Método para verificar si el usuario está logueado

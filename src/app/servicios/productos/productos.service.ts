@@ -27,4 +27,9 @@ export class ProductosService {
   obtenerTiposProducto(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl+"/categorias");
   }
+
+  addTipoProducto(tipoProducto: string): Observable<any> {
+    const url = `https://betcgestadio-production.up.railway.app/api/categorias`; // Asegúrate de que apiUrl apunte al backend
+    return this.http.post<any>(url, { tipo_producto: tipoProducto });
+  }
 }
