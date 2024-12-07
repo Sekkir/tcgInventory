@@ -1,5 +1,6 @@
+const path = require('path');
 const { app, BrowserWindow } = require('electron');
-const path = require('path'); 
+
 let win;
 
 function createWindow() {
@@ -7,19 +8,22 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+      contextIsolation: false,  // Desactiva el aislamiento del contexto
+      allowRunningInsecureContent: true  // Permite cargar contenido no seguro si es necesario
+    },
   });
 
-  if (process.env.NODE_ENV === 'development') {
-    win.loadURL('http://localhost:8100');
-    win.webContents.openDevTools();  // Para desarrollo, abrimos las herramientas
-  } else {
-    // En producción, carga el archivo index.html desde la carpeta 'www'
-    win.loadFile(path.join(__dirname, 'www', 'index.html')).catch(err => {
-      console.error('Error al cargar index.html:', err);
-    });
-  }
+  // Verifica la ruta completa del archivo index.html
+  const indexPath = path.join(__dirname, 'www', 'index.html');
+  console.log('Cargando archivo:', indexPath);
+
+  win.loadFile(indexPath).catch(err => {
+    console.error('Error al cargar index.html:', err);
+  });
+
+  // Abre las herramientas de desarrollo
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
